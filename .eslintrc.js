@@ -29,14 +29,7 @@ module.exports = {
     'import/order': [
       'error',
       {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-        ],
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
         'newlines-between': 'always',
         alphabetize: {
           order: 'asc',
@@ -49,6 +42,11 @@ module.exports = {
   settings: {
     react: {
       version: 'detect',
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
     },
   },
 }

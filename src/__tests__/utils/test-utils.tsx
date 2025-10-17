@@ -1,7 +1,7 @@
-import { ReactElement } from 'react'
-import { render, RenderOptions } from '@testing-library/react'
 import { ChakraProvider } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { render, RenderOptions } from '@testing-library/react'
+import { ReactElement } from 'react'
 
 import { theme } from '@/lib/theme'
 
