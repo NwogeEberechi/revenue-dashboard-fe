@@ -12,16 +12,57 @@ import {
 import { FC } from 'react'
 
 import { Button } from '@/components/Button'
+import { DatePicker } from '@/components/DatePicker'
 import { SelectInput } from '@/components/SelectInput'
+
+import { useFilterState } from '../hooks/useFilterState'
+import type { TransactionFilters } from '../types/transaction'
+
+import { QuickFilters } from './QuickFilters'
 
 interface FilterDrawerProps {
   isOpen: boolean
   onClose: () => void
+  onApply: (filters: TransactionFilters) => void
 }
 
-const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onClose }) => {
-  const filterRanges = ['Today', 'Last 7 days', 'This month', 'Last 3 months']
+const TRANSACTION_TYPE_OPTIONS = [
+  'Store Transactions',
+  'Get Tipped',
+  'Withdrawals',
+  'Chargebacks',
+  'Cashbacks',
+  'Refer & Earn',
+] as const
+
+const TRANSACTION_STATUS_OPTIONS = ['Successful', 'Pending', 'Failed'] as const
+
+const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onClose, onApply }) => {
   const drawerSize = useBreakpointValue({ base: 'full', md: 'md' })
+
+  const {
+    startDate,
+    endDate,
+    transactionTypes,
+    transactionStatuses,
+    setTransactionTypes,
+    setTransactionStatuses,
+    handleQuickFilter,
+    handleStartDateChange,
+    handleEndDateChange,
+    handleClear,
+    canApplyFilter,
+    buildFilters,
+  } = useFilterState()
+
+  const handleApplyFilter = () => {
+    if (!canApplyFilter) {
+      return
+    }
+
+    onApply(buildFilters())
+    onClose()
+  }
 
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={drawerSize}>
@@ -33,111 +74,56 @@ const FilterDrawer: FC<FilterDrawerProps> = ({ isOpen, onClose }) => {
         </DrawerHeader>
 
         <DrawerBody position="relative" pb="100px">
-          {' '}
-          <Flex gap={3}>
-            {filterRanges.map(range => (
-              <Button
-                key={range}
-                variant="outline"
-                py="10px"
-                px="16px"
-                textColor="black.300"
-                fontSize="sm"
-              >
-                {range}
-              </Button>
-            ))}
-          </Flex>
-          <Flex direction="column" gap={6} mt={6}>
-            <Flex gap={4} flexWrap="wrap" w="full">
-              <Box flex="1 1 45%">
-                <Box>
-                  <Box
-                    as="label"
-                    fontWeight={600}
-                    fontSize="sm"
-                    color="black.300"
-                    mb={2}
-                    display="block"
-                  >
-                    Start Date
-                  </Box>
-                  <input
-                    type="date"
-                    style={{
-                      width: '100%',
-                      height: '48px',
-                      borderRadius: '12px',
-                      border: '1px solid gray.50',
-                      background: 'gray.50',
-                      padding: '0 12px',
-                      fontWeight: 500,
-                      color: 'black.300',
-                      outline: 'none',
-                    }}
-                  />
-                </Box>
-              </Box>
+          <Flex direction="column" gap={6}>
+            <QuickFilters onFilterSelect={handleQuickFilter} />
 
-              <Box flex="1 1 45%">
-                <Box>
-                  <Box
-                    as="label"
-                    fontWeight={600}
-                    fontSize="sm"
-                    color="black.300"
-                    mb={2}
-                    display="block"
-                  >
-                    End Date
-                  </Box>
-                  <input
-                    type="date"
-                    style={{
-                      width: '100%',
-                      height: '48px',
-                      borderRadius: '12px',
-                      border: '1px solid gray.50',
-                      background: 'gray.50',
-                      padding: '0 12px',
-                      fontWeight: 500,
-                      color: 'black.300',
-                      outline: 'none',
-                    }}
-                  />
-                </Box>
+            <Box>
+              <Box mb={2} fontWeight={600} fontSize="sm" color="black.300">
+                Date Range
               </Box>
-            </Flex>
+              <Flex gap={3} w="full" direction={{ base: 'column', sm: 'row' }}>
+                <DatePicker
+                  placeholder="Start date"
+                  value={startDate}
+                  onChange={handleStartDateChange}
+                />
+                <DatePicker
+                  placeholder="End date"
+                  value={endDate}
+                  onChange={handleEndDateChange}
+                  minDate={startDate}
+                  isDisabled={!startDate}
+                />
+              </Flex>
+            </Box>
 
             <SelectInput
               label="Transaction Type"
-              options={[
-                'Store Transactions',
-                'Get Tipped',
-                'Withdrawals',
-                'Chargebacks',
-                'Cashbacks',
-                'Refer & Earn',
-              ]}
+              options={[...TRANSACTION_TYPE_OPTIONS]}
+              value={transactionTypes}
+              onChange={setTransactionTypes}
             />
 
-            <SelectInput label="Transaction Status" options={['Successful', 'Pending', 'Failed']} />
+            <SelectInput
+              label="Transaction Status"
+              options={[...TRANSACTION_STATUS_OPTIONS]}
+              value={transactionStatuses}
+              onChange={setTransactionStatuses}
+            />
           </Flex>
-          <Box
-            position="absolute"
-            bottom="0"
-            left="0"
-            width="100%"
-            bg="white"
-            py={4}
-            px={6}
-            borderTop="1px solid gray.50"
-          >
+          <Box position="absolute" bottom="0" left="0" width="100%" bg="white" py={4} px={6}>
             <Flex justify="space-between" gap={3}>
-              <Button variant="outline" maxW="50%">
+              <Button variant="outline" maxW="50%" onClick={handleClear}>
                 Clear
               </Button>
-              <Button variant="primary" maxW="50%">
+              <Button
+                variant="primary"
+                maxW="50%"
+                onClick={handleApplyFilter}
+                isDisabled={!canApplyFilter}
+                opacity={!canApplyFilter ? 0.5 : 1}
+                cursor={!canApplyFilter ? 'not-allowed' : 'pointer'}
+              >
                 Apply Filter
               </Button>
             </Flex>

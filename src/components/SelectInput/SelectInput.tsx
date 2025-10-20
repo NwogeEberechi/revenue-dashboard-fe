@@ -11,27 +11,40 @@ import {
   VStack,
   useDisclosure,
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { DropDownIcon } from '../icons'
+
 interface SelectInputProps {
   label: string
   placeholder?: string
-  options: string[]
+  options: readonly string[] | string[]
+  value?: string[]
+  onChange?: (selected: string[]) => void
 }
 
-export const SelectInput = ({
+export const SelectInput: React.FC<SelectInputProps> = ({
   label,
   placeholder = 'Select options',
   options,
-}: SelectInputProps) => {
+  value,
+  onChange,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
+  const [internalSelected, setInternalSelected] = useState<string[]>([])
+
+  const selectedOptions = value !== undefined ? value : internalSelected
 
   const handleSelect = (option: string) => {
-    setSelectedOptions(prev =>
-      prev.includes(option) ? prev.filter(item => item !== option) : [...prev, option]
-    )
+    const newSelected = selectedOptions.includes(option)
+      ? selectedOptions.filter(item => item !== option)
+      : [...selectedOptions, option]
+
+    if (onChange) {
+      onChange(newSelected)
+    } else {
+      setInternalSelected(newSelected)
+    }
   }
 
   const displayValue = selectedOptions.length > 0 ? selectedOptions.join(', ') : placeholder
@@ -42,7 +55,7 @@ export const SelectInput = ({
         {label}
       </Text>
 
-      <Menu isOpen={isOpen} onClose={onClose} matchWidth>
+      <Menu isOpen={isOpen} onClose={onClose} matchWidth closeOnSelect={false}>
         <MenuButton
           as={Button}
           onClick={isOpen ? onClose : onOpen}
@@ -90,7 +103,9 @@ export const SelectInput = ({
                 key={option}
                 _hover={{ bg: 'gray.50' }}
                 _focus={{ bg: 'transparent' }}
+                closeOnSelect={false}
                 onClick={e => {
+                  e.preventDefault()
                   e.stopPropagation()
                   handleSelect(option)
                 }}
@@ -100,11 +115,17 @@ export const SelectInput = ({
               >
                 <Checkbox
                   isChecked={selectedOptions.includes(option)}
-                  onChange={() => handleSelect(option)}
-                  colorScheme="black.300"
+                  pointerEvents="none"
+                  colorScheme="gray"
                   size="md"
+                  sx={{
+                    '.chakra-checkbox__control[data-checked]': {
+                      background: 'black.300',
+                      borderColor: 'black.300',
+                    },
+                  }}
                 >
-                  <Text fontWeight={500} color="black.300">
+                  <Text fontWeight={500} color="black.300" pointerEvents="none">
                     {option}
                   </Text>
                 </Checkbox>

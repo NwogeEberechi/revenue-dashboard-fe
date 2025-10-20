@@ -3,6 +3,9 @@ import React from 'react'
 
 import { Button } from '@/components/Button'
 import { Skeleton } from '@/components/Skeleton'
+import RevenueChart from '@/features/transactions/components/RevenueChart'
+import { useTransactions } from '@/features/transactions/hooks/useTransactions'
+import { useTransactionStore } from '@/features/transactions/store/transactionStore'
 
 import { useWallet } from '../hooks/useWallet'
 
@@ -10,6 +13,8 @@ import { WalletItem } from './WalletItem'
 
 const Wallet: React.FC = () => {
   const { data, isLoading, isError, error } = useWallet()
+  const { filters } = useTransactionStore()
+  const { rawData: transactions, isLoading: isLoadingTransactions } = useTransactions(filters)
 
   if (isError) {
     return (
@@ -23,46 +28,51 @@ const Wallet: React.FC = () => {
   }
 
   return (
-    <Flex mt={16}>
-      <Box flex={1}>
-        <Text fontSize="sm" fontWeight={500}>
-          Available Balance
-        </Text>
-        <Flex alignItems={'center'}>
-          <Skeleton isLoaded={!isLoading} height={isLoading ? '40px' : 'auto'} mr={16}>
-            <Text mr={16} fontWeight={700} fontSize="4xl" textColor="black.300">
-              {data?.availableBalance || 'USD 0.00'}
-            </Text>
-          </Skeleton>
-          <Button maxW={167} py={'14px'} isDisabled={isLoading}>
-            Withdraw
-          </Button>
-        </Flex>
-      </Box>
+    <Box mt={16}>
+      <Flex>
+        <Box flex={1} mr="124px">
+          <Text fontSize="sm" fontWeight={500}>
+            Available Balance
+          </Text>
+          <Flex alignItems={'center'}>
+            <Skeleton isLoaded={!isLoading} height={isLoading ? '40px' : 'auto'} mr={16}>
+              <Text mr={16} fontWeight={700} fontSize="4xl" textColor="black.300">
+                {data?.availableBalance || 'USD 0.00'}
+              </Text>
+            </Skeleton>
+            <Button w={167} h="52px" isDisabled={isLoading}>
+              Withdraw
+            </Button>
+          </Flex>
+          <Box mt={12}>
+            <RevenueChart transactions={transactions} isLoading={isLoadingTransactions} />
+          </Box>
+        </Box>
 
-      <VStack maxW="271px" width="full" spacing={8}>
-        <WalletItem
-          label="Ledger Balance"
-          value={data?.ledgerBalance || 'USD 0.00'}
-          isLoading={isLoading}
-        />
-        <WalletItem
-          label="Total Payout"
-          value={data?.totalPayout || 'USD 0.00'}
-          isLoading={isLoading}
-        />
-        <WalletItem
-          label="Total Revenue"
-          value={data?.totalRevenue || 'USD 0.00'}
-          isLoading={isLoading}
-        />
-        <WalletItem
-          label="Pending Payout"
-          value={data?.pendingPayout || 'USD 0.00'}
-          isLoading={isLoading}
-        />
-      </VStack>
-    </Flex>
+        <VStack maxW="271px" width="full" spacing={8}>
+          <WalletItem
+            label="Ledger Balance"
+            value={data?.ledgerBalance || 'USD 0.00'}
+            isLoading={isLoading}
+          />
+          <WalletItem
+            label="Total Payout"
+            value={data?.totalPayout || 'USD 0.00'}
+            isLoading={isLoading}
+          />
+          <WalletItem
+            label="Total Revenue"
+            value={data?.totalRevenue || 'USD 0.00'}
+            isLoading={isLoading}
+          />
+          <WalletItem
+            label="Pending Payout"
+            value={data?.pendingPayout || 'USD 0.00'}
+            isLoading={isLoading}
+          />
+        </VStack>
+      </Flex>
+    </Box>
   )
 }
 
