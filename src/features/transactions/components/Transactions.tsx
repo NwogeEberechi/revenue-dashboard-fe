@@ -1,18 +1,40 @@
-import { Alert, AlertIcon, Box, Flex, Text, VStack, useDisclosure } from '@chakra-ui/react'
-import React from 'react'
+import { Alert, AlertIcon, Badge, Box, Flex, Text, VStack, useDisclosure } from '@chakra-ui/react'
+import React, { useMemo } from 'react'
 
 import { Button } from '@/components/Button'
 import { DownloadIcon, DropDownIcon } from '@/components/icons'
 import { Skeleton } from '@/components/Skeleton'
 
 import { useTransactions } from '../hooks/useTransactions'
+import { useTransactionStore } from '../store/transactionStore'
 
+import { EmptyTransactionState } from './EmptyTransactionState'
 import FilterDrawer from './FilterDrawer'
 import { TransactionItem } from './TransactionItem'
 
 const Transactions: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { data, count, isLoading, isError, error } = useTransactions()
+  const { filters, setFilters, clearFilters } = useTransactionStore()
+  const { data, count, isLoading, isError, error } = useTransactions(filters)
+
+  // Calculate active filter count
+  const filterCount = useMemo(() => {
+    if (!filters) return 0
+    let count = 0
+    if (filters.startDate || filters.endDate) count++
+    if (filters.types?.length) count++
+    if (filters.statuses?.length) count++
+    return count
+  }, [filters])
+
+  const hasActiveFilters = useMemo(() => filterCount > 0, [filterCount])
+
+  const showEmptyState = useMemo(
+    () => !isLoading && !isError && data?.length === 0 && hasActiveFilters,
+    [isLoading, isError, data, hasActiveFilters]
+  )
+
+  const hasData = useMemo(() => Boolean(data && data.length > 0), [data])
 
   return (
     <Box my="82px">
@@ -39,17 +61,30 @@ const Transactions: React.FC = () => {
         </Box>
 
         <Flex alignItems="center" gap={2}>
-          <Button variant="secondary" maxW={107} onClick={onOpen} isDisabled={isLoading}>
-            <Flex alignItems="center" gap={2}>
-              Filter <DropDownIcon />
+          <Button variant="secondary" w={107} onClick={onOpen} isDisabled={isLoading}>
+            <Flex alignItems="center" gap={2} position="relative">
+              Filter
+              {filterCount > 0 && (
+                <Badge
+                  bg="black.300"
+                  color="white"
+                  borderRadius="full"
+                  fontSize="xs"
+                  minW="20px"
+                  h="20px"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  fontWeight={600}
+                >
+                  {filterCount}
+                </Badge>
+              )}
+              <DropDownIcon />
             </Flex>
           </Button>
 
-          <Button
-            variant="secondary"
-            maxW={139}
-            isDisabled={isLoading || !data || data.length === 0}
-          >
+          <Button variant="secondary" w={139} isDisabled={isLoading || !hasData}>
             <Flex alignItems="center" gap={2}>
               Export List <DownloadIcon />
             </Flex>
@@ -84,8 +119,10 @@ const Transactions: React.FC = () => {
                 </Flex>
               </Flex>
             ))
-        ) : data && data.length > 0 ? (
-          data.map(transaction => (
+        ) : showEmptyState ? (
+          <EmptyTransactionState onClearFilters={clearFilters} />
+        ) : hasData ? (
+          data?.map(transaction => (
             <TransactionItem
               key={transaction.id}
               title={transaction.title}
@@ -102,7 +139,7 @@ const Transactions: React.FC = () => {
         )}
       </VStack>
 
-      <FilterDrawer isOpen={isOpen} onClose={onClose} />
+      <FilterDrawer isOpen={isOpen} onClose={onClose} onApply={setFilters} />
     </Box>
   )
 }

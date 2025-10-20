@@ -47,3 +47,10 @@ export type FormattedTransaction = {
   type: DisplayType
   status: TransactionStatus
 }
+
+export type TransactionFilters = {
+  startDate?: Date
+  endDate?: Date
+  types?: string[]
+  statuses?: string[]
+}
