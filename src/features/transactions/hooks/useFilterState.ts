@@ -9,9 +9,9 @@ const DEFAULT_TRANSACTION_TYPES = [
   'Chargebacks',
   'Cashbacks',
   'Refer & Earn',
-] as const
+]
 
-const DEFAULT_TRANSACTION_STATUSES = ['Successful', 'Pending', 'Failed'] as const
+const DEFAULT_TRANSACTION_STATUSES = ['Successful', 'Pending', 'Failed']
 
 export type QuickFilterValue = 'today' | 'last7days' | 'thisMonth' | 'last3months'
 
