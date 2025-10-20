@@ -1,21 +1,31 @@
 import { useMemo } from 'react'
 
 import { useTransactionsQuery } from '../api/transaction.query'
+import type { TransactionFilters } from '../types/transaction'
+import { filterTransactions } from '../utils/filterTransactions'
 import { formatTransactions } from '../utils/formatters'
 
-export const useTransactions = () => {
+export const useTransactions = (filters?: TransactionFilters) => {
   const { data: rawData, isLoading, isError, error } = useTransactionsQuery()
 
-  const formattedData = useMemo(() => {
+  const filteredRawData = useMemo(() => {
     if (!rawData) return null
-    return formatTransactions(rawData)
-  }, [rawData])
 
-  const count = formattedData?.length || 0
+    // Apply filters if provided
+    return filters ? filterTransactions(rawData, filters) : rawData
+  }, [rawData, filters])
+
+  const filteredData = useMemo(() => {
+    if (!filteredRawData) return null
+
+    return formatTransactions(filteredRawData)
+  }, [filteredRawData])
+
+  const count = filteredData?.length || 0
 
   return {
-    data: formattedData,
-    rawData,
+    data: filteredData,
+    rawData: filteredRawData,
     count,
     isLoading,
     isError,

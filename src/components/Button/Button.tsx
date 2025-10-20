@@ -38,7 +38,14 @@ export const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', .
   }
 
   return (
-    <ChakraButton rounded="full" fontWeight="medium" {...variantStyles[variant]} {...props}>
+    <ChakraButton
+      rounded="full"
+      fontWeight="medium"
+      w={props.w || '100%'}
+      h={props.h || '48px'}
+      {...variantStyles[variant]}
+      {...props}
+    >
       {children}
     </ChakraButton>
   )
