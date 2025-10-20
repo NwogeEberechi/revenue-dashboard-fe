@@ -5,7 +5,6 @@ import { Button } from '@/components/Button'
 import { Skeleton } from '@/components/Skeleton'
 import RevenueChart from '@/features/transactions/components/RevenueChart'
 import { useTransactions } from '@/features/transactions/hooks/useTransactions'
-import { useTransactionStore } from '@/features/transactions/store/transactionStore'
 
 import { useWallet } from '../hooks/useWallet'
 
@@ -13,8 +12,7 @@ import { WalletItem } from './WalletItem'
 
 const Wallet: React.FC = () => {
   const { data, isLoading, isError, error } = useWallet()
-  const { filters } = useTransactionStore()
-  const { rawData: transactions, isLoading: isLoadingTransactions } = useTransactions(filters)
+  const { rawData: transactions, isLoading: isLoadingTransactions } = useTransactions()
 
   if (isError) {
     return (
