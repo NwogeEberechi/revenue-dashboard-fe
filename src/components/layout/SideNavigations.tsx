@@ -1,7 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react'
 import React from 'react'
 
-import { AnalyticsIcon, HomeIcon } from '../ui/icons'
+import { InvoiceIcon, LinkIcon, MediaIcon, StoreIcon } from '../icons'
 
 const SideNavigations: React.FC = () => {
   return (
@@ -18,19 +18,16 @@ const SideNavigations: React.FC = () => {
       shadow="2xl"
     >
       <Box>
-        <HomeIcon />
+        <LinkIcon />
       </Box>
       <Box>
-        <AnalyticsIcon />
+        <StoreIcon />
       </Box>
       <Box>
-        <AnalyticsIcon />
+        <MediaIcon />
       </Box>
       <Box>
-        <AnalyticsIcon />
-      </Box>
-      <Box>
-        <AnalyticsIcon />
+        <InvoiceIcon />
       </Box>
     </Flex>
   )

@@ -1,4 +1,4 @@
-import { AnalyticsIcon, AppsIcon, HomeIcon, PeopleIcon, RevenueIcon } from '@/components/ui/icons'
+import { AnalyticsIcon, AppsIcon, HomeIcon, PeopleIcon, RevenueIcon } from '@/components/icons'
 import type { NavItem } from '@/types/navigation'
 
 export const navItems: NavItem[] = [
