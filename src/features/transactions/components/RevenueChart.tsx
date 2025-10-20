@@ -95,13 +95,13 @@ const RevenueChart: React.FC<RevenueChartProps> = ({ transactions, isLoading = f
           </defs>
           <XAxis
             dataKey="date"
-            tickFormatter={value => format(parseISO(value), 'MMM d, yyyy')}
+            tickFormatter={(value: string) => format(parseISO(value), 'MMM d, yyyy')}
             stroke="#9CA3AF"
             fontSize={12}
             tickLine={false}
             axisLine={{ stroke: '#E5E7EB' }}
             tick={{ fill: '#6B7280' }}
-            ticks={[chartData[0]?.date, chartData[chartData.length - 1]?.date]}
+            ticks={[chartData[0]?.date]}
           />
           <YAxis hide />
           <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#FF5403', strokeWidth: 1 }} />
@@ -117,7 +117,7 @@ const RevenueChart: React.FC<RevenueChartProps> = ({ transactions, isLoading = f
       </ResponsiveContainer>
 
       {dateRange && (
-        <Flex justify="space-between" mt={2} px={{ base: 2, md: 4 }}>
+        <Flex justify="space-between" px={{ base: 2, md: 4 }}>
           <Text fontSize={{ base: '2xs', sm: 'xs' }} color="gray.500">
             {dateRange.startDate}
           </Text>

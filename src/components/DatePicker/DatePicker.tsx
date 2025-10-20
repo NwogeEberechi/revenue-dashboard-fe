@@ -119,21 +119,49 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                 },
                 '.rdp-caption': {
                   display: 'flex',
-                  justifyContent: 'center',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: '0 0 16px 0',
+                  position: 'relative',
                 },
                 '.rdp-caption_label': {
                   fontSize: '16px',
                   fontWeight: 600,
                   color: '#131316',
+                  flex: 1,
+                  textAlign: 'center',
+                  display: 'flex',
+                  gap: '8px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                },
+                '.rdp-caption_dropdowns': {
+                  display: 'flex',
+                  gap: '8px',
+                  alignItems: 'center',
+                },
+                '.rdp-dropdown': {
+                  padding: '4px 8px',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  color: '#131316',
+                  backgroundColor: '#F4F4F4',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  _hover: {
+                    backgroundColor: '#E4E4E4',
+                  },
+                },
+                '.rdp-dropdown_month': {
+                  minWidth: '100px',
+                },
+                '.rdp-dropdown_year': {
+                  minWidth: '70px',
                 },
                 '.rdp-nav': {
-                  position: 'absolute',
-                  width: '100%',
                   display: 'flex',
-                  justifyContent: 'space-between',
-                  top: 0,
+                  gap: '4px',
                 },
                 '.rdp-nav_button': {
                   width: '32px',
@@ -182,6 +210,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                 numberOfMonths={1}
                 fromDate={minDate}
                 toDate={maxDate}
+                captionLayout="dropdown"
+                fromYear={minDate ? minDate.getFullYear() : 1900}
+                toYear={maxDate ? maxDate.getFullYear() : 2100}
               />
             </Box>
           </PopoverBody>
