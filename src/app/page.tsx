@@ -1,16 +1,17 @@
 'use client'
 
-import { Box, Text } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 
 import PageLayout from '@/components/layout/PageLayout'
+import Transactions from '@/features/transactions/components/Transactions'
 import Wallet from '@/features/wallet/components/Wallet'
 
 export default function Home() {
   return (
     <PageLayout>
-      <Box h="100vh" bg="gray.50">
-        <Text>Home</Text>
+      <Box minH="100vh">
         <Wallet />
+        <Transactions />
       </Box>
     </PageLayout>
   )

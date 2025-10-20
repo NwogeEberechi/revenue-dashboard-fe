@@ -1,11 +1,18 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { navItems } from '@/constants/navigation'
+import UserProfile from '@/features/user/components/UserProfile'
 
-import { HamburgerIcon, HeaderLogo, MessageIcon, NotificationIcon } from '../ui/icons'
+import { HamburgerIcon, HeaderLogo, MessageIcon, NotificationIcon } from '../icons'
 
 const Header: React.FC = () => {
+  const [isUserProfileOpen, setIsUserProfileOpen] = useState(false)
+
+  const handleUserProfileOpen = () => {
+    setIsUserProfileOpen(prev => !prev)
+  }
+
   return (
     <Box bg="white" position="fixed" pt={4} left={4} right={4} zIndex={100}>
       <Flex
@@ -13,7 +20,7 @@ const Header: React.FC = () => {
         alignItems={'center'}
         shadow="md"
         px={6}
-        py="14px"
+        py={3}
         rounded="full"
         bg="white"
       >
@@ -28,6 +35,10 @@ const Header: React.FC = () => {
               gap={1}
               bg={item.label === 'Revenue' ? 'black' : ''}
               color={item.label === 'Revenue' ? 'white' : 'gray.400'}
+              _hover={{
+                bg: item.label === 'Revenue' ? 'black' : 'gray.50',
+                color: item.label === 'Revenue' ? 'white' : 'gray.400',
+              }}
               borderRadius="full"
               pl="14px"
               pr="18px"
@@ -50,9 +61,19 @@ const Header: React.FC = () => {
             p={1}
             pr={3}
             cursor="pointer"
+            position="relative"
+            onClick={handleUserProfileOpen}
           >
             <Box w="32px" h="32px" bg="black" borderRadius="full"></Box>
             <HamburgerIcon />
+            <Box
+              display={isUserProfileOpen ? 'block' : 'none'}
+              position="absolute"
+              top={14}
+              right={0}
+            >
+              <UserProfile />
+            </Box>
           </Flex>
         </Flex>
       </Flex>
