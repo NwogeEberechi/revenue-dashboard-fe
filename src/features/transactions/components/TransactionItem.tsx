@@ -3,42 +3,36 @@ import React from 'react'
 
 import { DownArrowIcon, UpArrowIcon } from '@/components/icons'
 
-type TransactionType = 'income' | 'expense'
+import { DISPLAY_TYPES, type DisplayType } from '../types/transaction'
 
 type TransactionItemProps = {
   title: string
   amount: string
   payer: string
   date: string
-  type?: TransactionType
+  type?: DisplayType
 }
 
-/**
- * Transaction Item Component
- *
- * Displays a single transaction with icon, title, amount, payer, and date.
- * The icon background color changes based on transaction type (income/expense).
- */
 export const TransactionItem: React.FC<TransactionItemProps> = ({
   title,
   amount,
   payer,
   date,
-  type = 'income',
+  type = DISPLAY_TYPES.INCOME,
 }) => {
   return (
     <Flex w="full">
       <Box
         w="48px"
         h="48px"
-        bg={type === 'income' ? 'jade.50' : 'red.100'}
+        bg={type === DISPLAY_TYPES.INCOME ? 'jade.50' : 'red.100'}
         rounded="full"
         display="flex"
         alignItems="center"
         justifyContent="center"
         mr={4}
       >
-        {type === 'income' ? <DownArrowIcon /> : <UpArrowIcon />}
+        {type === DISPLAY_TYPES.INCOME ? <DownArrowIcon /> : <UpArrowIcon />}
       </Box>
 
       <Flex direction="column" flex={1}>

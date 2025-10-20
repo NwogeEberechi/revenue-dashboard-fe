@@ -7,12 +7,6 @@ type ButtonProps = Omit<ChakraButtonProps, 'variant'> & {
   variant?: ButtonVariant
 }
 
-/**
- * Custom Button Component
- *
- * Provides consistent button styling across the application using theme colors.
- * Supports variants: primary (default), secondary, outline, ghost
- */
 export const Button: React.FC<ButtonProps> = ({ children, variant = 'primary', ...props }) => {
   const variantStyles = {
     primary: {
