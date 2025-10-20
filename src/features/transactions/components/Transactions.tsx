@@ -1,5 +1,5 @@
 import { Alert, AlertIcon, Badge, Box, Flex, Text, VStack, useDisclosure } from '@chakra-ui/react'
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import { Button } from '@/components/Button'
 import { DownloadIcon, DropDownIcon } from '@/components/icons'
@@ -14,27 +14,9 @@ import { TransactionItem } from './TransactionItem'
 
 const Transactions: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { filters, setFilters, clearFilters } = useTransactionStore()
-  const { data, count, isLoading, isError, error } = useTransactions(filters)
-
-  // Calculate active filter count
-  const filterCount = useMemo(() => {
-    if (!filters) return 0
-    let count = 0
-    if (filters.startDate || filters.endDate) count++
-    if (filters.types?.length) count++
-    if (filters.statuses?.length) count++
-    return count
-  }, [filters])
-
-  const hasActiveFilters = useMemo(() => filterCount > 0, [filterCount])
-
-  const showEmptyState = useMemo(
-    () => !isLoading && !isError && data?.length === 0 && hasActiveFilters,
-    [isLoading, isError, data, hasActiveFilters]
-  )
-
-  const hasData = useMemo(() => Boolean(data && data.length > 0), [data])
+  const { setFilters, clearFilters } = useTransactionStore()
+  const { data, count, isLoading, isError, error, filterCount, showEmptyState, hasData } =
+    useTransactions()
 
   return (
     <Box my="82px">
