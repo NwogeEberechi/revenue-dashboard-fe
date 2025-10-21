@@ -26,20 +26,18 @@
 
 This is a **production-grade revenue dashboard** that enables businesses to track transactions, visualize revenue trends, and manage wallet information. Built as a technical assessment showcase, this project demonstrates enterprise-level React development practices, clean architecture, and modern frontend engineering patterns.
 
-**Live Demo:** [Your Deployment URL]
+**Live Demo:** https://mainstack-revenue-dashboard.netlify.app/
 
 ## ✨ Features
 
 ### 🎨 User Interface
 
 - **Responsive Design** - Seamless experience across desktop, tablet, and mobile devices
-- **Dark/Light Theme Ready** - Built with theming support using Chakra UI
 - **Accessible** - WCAG 2.1 AA compliant with keyboard navigation and ARIA labels
 - **Smooth Animations** - Framer Motion powered transitions and micro-interactions
 
 ### 📊 Dashboard Capabilities
 
-- **Real-time Transaction Monitoring** - Live transaction list with status indicators
 - **Advanced Filtering** - Multi-criteria filtering (date range, type, status)
   - Date range picker with year/month dropdown navigation
   - Transaction type selection (Store, Tips, Withdrawals, etc.)
@@ -183,7 +181,7 @@ Snake_case (backend) → camelCase (frontend) transformation at the API boundary
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/revenue-dashboard-fe.git
+   git clone https://github.com/NwogeEberechi/revenue-dashboard-fe.git
    cd revenue-dashboard-fe
    ```
 
@@ -620,7 +618,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions or feedback, reach out:
 
-- 📧 Email: eberechinwoge@gmail.com
+- Email: eberechinwoge@gmail.com
+- LinkedIn: https://www.linkedin.com/in/nwoge-eberechi/
 
 ---
 
@@ -628,8 +627,8 @@ For questions or feedback, reach out:
 
 ### ⭐ Star this repo if you find it helpful!
 
-[Report Bug](https://github.com/yourusername/revenue-dashboard-fe/issues) ·
-[Request Feature](https://github.com/yourusername/revenue-dashboard-fe/issues) ·
-[View Demo](https://your-demo-url.com)
+[Report Bug](https://github.com/NwogeEberechi/revenue-dashboard-fe/issues) ·
+[Request Feature](https://github.com/NwogeEberechi/revenue-dashboard-fe/issues) ·
+[View Demo](https://mainstack-revenue-dashboard.netlify.app/)
 
 </div>
