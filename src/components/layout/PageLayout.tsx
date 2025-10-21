@@ -10,9 +10,11 @@ type PageLayoutProps = {
 
 const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
   return (
-    <Box p={4} pt={0} bg="white">
+    <Box p={{ base: 0, md: 4 }} pt={{ base: 0, md: 0 }} bg="white">
       <Header />
-      <SideNavigations />
+      <Box display={{ base: 'none', lg: 'block' }}>
+        <SideNavigations />
+      </Box>
       <Container maxW="container.xl" mx="auto" pt={24}>
         {children}
       </Container>

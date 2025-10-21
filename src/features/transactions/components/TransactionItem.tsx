@@ -23,26 +23,31 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
   return (
     <Flex w="full">
       <Box
-        w="48px"
-        h="48px"
+        w={{ base: '40px', sm: '48px' }}
+        h={{ base: '40px', sm: '48px' }}
         bg={type === DISPLAY_TYPES.INCOME ? 'jade.50' : 'red.100'}
         rounded="full"
         display="flex"
         alignItems="center"
         justifyContent="center"
-        mr={4}
+        mr={{ base: 2, md: 4 }}
       >
         {type === DISPLAY_TYPES.INCOME ? <DownArrowIcon /> : <UpArrowIcon />}
       </Box>
 
       <Flex direction="column" flex={1}>
-        <Flex justifyContent="space-between" w="full">
+        <Flex justifyContent="space-between" fontSize={{ base: '12px', sm: 'md' }} gap={2} w="full">
           <Text fontWeight={500}>{title}</Text>
           <Text fontWeight={700} color="black.300">
             {amount}
           </Text>
         </Flex>
-        <Flex justifyContent="space-between" fontSize="sm" fontWeight={500}>
+        <Flex
+          justifyContent="space-between"
+          gap={2}
+          fontSize={{ base: '12px', sm: 'sm' }}
+          fontWeight={500}
+        >
           <Text>{payer}</Text>
           <Text>{date}</Text>
         </Flex>

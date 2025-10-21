@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Tooltip } from '@chakra-ui/react'
 import React from 'react'
 
 import { InvoiceIcon, LinkIcon, MediaIcon, StoreIcon } from '../icons'
@@ -36,10 +36,10 @@ const NavigationIcon: React.FC<NavigationIconProps> = ({ icon, ariaLabel, onClic
 )
 
 const NAV_ITEMS = [
-  { icon: <LinkIcon />, label: 'Links' },
+  { icon: <LinkIcon />, label: 'Link in Bio' },
   { icon: <StoreIcon />, label: 'Store' },
-  { icon: <MediaIcon />, label: 'Media' },
-  { icon: <InvoiceIcon />, label: 'Invoices' },
+  { icon: <MediaIcon />, label: 'Media Kit' },
+  { icon: <InvoiceIcon />, label: 'Invoicing' },
 ] as const
 
 const SideNavigations: React.FC = () => {
@@ -58,9 +58,25 @@ const SideNavigations: React.FC = () => {
       shadow="2xl"
       role="navigation"
       aria-label="Side navigation"
+      zIndex={50}
     >
       {NAV_ITEMS.map(({ icon, label }) => (
-        <NavigationIcon key={label} icon={icon} ariaLabel={label} />
+        <Tooltip
+          key={label}
+          label={label}
+          placement="right"
+          hasArrow
+          bg="black.300"
+          color="white"
+          fontSize="sm"
+          px={3}
+          py={2}
+          borderRadius="md"
+        >
+          <span>
+            <NavigationIcon icon={icon} ariaLabel={label} />
+          </span>
+        </Tooltip>
       ))}
     </Flex>
   )

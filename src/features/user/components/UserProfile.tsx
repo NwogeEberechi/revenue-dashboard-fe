@@ -21,7 +21,7 @@ const UserProfile: React.FC = () => {
   const { user, isLoading, isError } = useUser()
 
   return (
-    <Box bg="white" rounded="md" shadow="md" p={4} w="330px">
+    <Box bg="white" rounded="15px" shadow="md" p={6} pb={4} w={{ base: '100%', sm: '330px' }}>
       <Flex direction="column" gap={4}>
         <Flex alignItems="center" gap={2}>
           <Skeleton isLoaded={!isLoading} width="40px" height="40px" borderRadius="40px">
