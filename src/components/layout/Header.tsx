@@ -34,7 +34,14 @@ const Header: React.FC = () => {
   }, [isUserProfileOpen])
 
   return (
-    <Box bg="white" position="fixed" pt={4} left={4} right={4} zIndex={100}>
+    <Box
+      bg="white"
+      position="fixed"
+      pt={4}
+      left={{ base: 2, sm: 4 }}
+      right={{ base: 2, sm: 4 }}
+      zIndex={100}
+    >
       <Flex
         justifyContent={'space-between'}
         alignItems={'center'}
@@ -59,6 +66,11 @@ const Header: React.FC = () => {
                 bg: item.label === 'Revenue' ? 'black' : 'gray.50',
                 color: item.label === 'Revenue' ? 'white' : 'gray.400',
               }}
+              display={{
+                base: item.label === 'Revenue' ? 'flex' : 'none',
+                lg: 'flex',
+              }}
+              fontSize={{ base: '12px', lg: 'md' }}
               borderRadius="full"
               pl="14px"
               pr="18px"
@@ -71,8 +83,10 @@ const Header: React.FC = () => {
           ))}
         </Flex>
         <Flex gap={8} alignItems="center">
-          <NotificationIcon />
-          <MessageIcon />
+          <Flex display={{ base: 'none', lg: 'flex' }} gap={8}>
+            <NotificationIcon />
+            <MessageIcon />
+          </Flex>
           <Box position="relative" ref={dropdownRef}>
             <Flex
               alignItems="center"
@@ -103,7 +117,7 @@ const Header: React.FC = () => {
               display={isUserProfileOpen ? 'block' : 'none'}
               position="absolute"
               top={14}
-              right={0}
+              right={{ base: -6, xl: 0 }}
               zIndex={1000}
             >
               <UserProfile />

@@ -19,30 +19,44 @@ const Transactions: React.FC = () => {
     useTransactions()
 
   return (
-    <Box my="82px">
+    <Box my={{ base: '60px', sm: '82px' }}>
       <Flex
-        alignItems="center"
-        justifyContent="space-between"
-        pb={6}
-        mb={8}
-        borderBottom="1px solid"
-        borderColor="gray.50"
+        alignItems={{ base: 'flex-start', sm: 'center' }}
+        justifyContent={{ sm: 'space-between' }}
+        pb={{ base: 2, sm: 6 }}
+        mb={{ base: 0, sm: 8 }}
+        borderBottom={{ sm: '1px solid', base: 'none' }}
+        borderColor={{ sm: 'gray.50', base: 'transparent' }}
+        direction={{ base: 'column', sm: 'row' }}
       >
-        <Box>
+        <Box
+          w="full"
+          borderBottom={{ sm: 'none', base: '1px solid' }}
+          pb={{ base: 2, sm: 0 }}
+          borderColor="gray.50"
+        >
           <Skeleton
             isLoaded={!isLoading}
             height={isLoading ? '32px' : 'auto'}
             width={isLoading ? '200px' : 'auto'}
             mb={1}
           >
-            <Text fontSize="2xl" color="black.300" fontWeight={700}>
+            <Text fontSize={{ base: 'xl', lg: '2xl' }} color="black.300" fontWeight={700}>
               {count} {count === 1 ? 'Transaction' : 'Transactions'}
             </Text>
           </Skeleton>
-          <Text fontSize="sm">Your transactions for the last 7 days</Text>
+          <Text fontSize="sm" whiteSpace="nowrap">
+            Your transactions for the last 7 days
+          </Text>
         </Box>
 
-        <Flex alignItems="center" gap={2}>
+        <Flex
+          alignItems="center"
+          justifyContent={{ base: 'flex-end' }}
+          mt={{ base: 4, sm: 0 }}
+          gap={2}
+          w="full"
+        >
           <Button variant="secondary" w={107} onClick={onOpen} isDisabled={isLoading}>
             <Flex alignItems="center" gap={2} position="relative">
               Filter

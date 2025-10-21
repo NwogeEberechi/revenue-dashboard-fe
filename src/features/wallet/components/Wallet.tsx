@@ -26,19 +26,29 @@ const Wallet: React.FC = () => {
   }
 
   return (
-    <Box mt={16}>
-      <Flex>
-        <Box flex={1} mr="124px">
+    <Box mt={{ base: 8, md: 16 }}>
+      <Flex
+        direction={{ base: 'column', sm: 'column', md: 'row' }}
+        align={{ base: 'stretch', md: 'flex-start' }}
+        gap={{ base: 8, md: 0 }}
+      >
+        <Box flex={1} mr={{ md: '80px', lg: '124px' }}>
           <Text fontSize="sm" fontWeight={500}>
             Available Balance
           </Text>
           <Flex alignItems={'center'}>
             <Skeleton isLoaded={!isLoading} height={isLoading ? '40px' : 'auto'} mr={16}>
-              <Text mr={16} fontWeight={700} fontSize="4xl" textColor="black.300">
+              <Text
+                mr={{ lg: 16 }}
+                fontWeight={700}
+                fontSize={{ md: '2xl', lg: '4xl' }}
+                textColor="black.300"
+                whiteSpace="nowrap"
+              >
                 {data?.availableBalance || 'USD 0.00'}
               </Text>
             </Skeleton>
-            <Button w={167} h="52px" isDisabled={isLoading}>
+            <Button w={167} h={{ base: '42px', lg: '52px' }} isDisabled={isLoading}>
               Withdraw
             </Button>
           </Flex>
@@ -47,7 +57,7 @@ const Wallet: React.FC = () => {
           </Box>
         </Box>
 
-        <VStack maxW="271px" width="full" spacing={8}>
+        <VStack maxW={{ md: '271px' }} width="full" spacing={{ base: 4, md: 8 }}>
           <WalletItem
             label="Ledger Balance"
             value={data?.ledgerBalance || 'USD 0.00'}

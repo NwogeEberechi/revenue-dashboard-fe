@@ -17,7 +17,7 @@ export const WalletItem: React.FC<WalletItemProps> = ({ label, value, isLoading 
       <InfoIcon />
     </Flex>
     <Skeleton isLoaded={!isLoading} height={isLoading ? '32px' : 'auto'}>
-      <Text textColor="black.300" fontSize="28px" fontWeight={700}>
+      <Text textColor="black.300" fontSize={{ base: '20px', lg: '28px' }} fontWeight={700}>
         {value}
       </Text>
     </Skeleton>
