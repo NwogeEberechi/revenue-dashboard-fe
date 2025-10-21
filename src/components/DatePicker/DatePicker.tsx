@@ -109,8 +109,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
               sx={{
                 '.rdp': {
                   '--rdp-cell-size': '36px',
-                  '--rdp-accent-color': '#131316',
-                  '--rdp-background-color': '#F4F4F4',
+                  '--rdp-accent-color': 'black.300',
+                  '--rdp-background-color': 'white',
                   margin: 0,
                   width: '100%',
                 },
@@ -157,11 +157,17 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                   minWidth: '100px',
                 },
                 '.rdp-dropdown_year': {
-                  minWidth: '70px',
+                  minWidth: '700px',
+                },
+                '.rdp-years_dropdown': {
+                  minWidth: '200px',
                 },
                 '.rdp-nav': {
                   display: 'flex',
                   gap: '4px',
+                },
+                '.rdp-caption_label .rdp-chevron': {
+                  display: 'none',
                 },
                 '.rdp-nav_button': {
                   width: '32px',
